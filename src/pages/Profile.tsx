@@ -1,3 +1,4 @@
+import PasswordsEditing from "../feature/profile/PasswordsEditing";
 import ProfileForm from "../feature/profile/ProfileForm";
 import ProfileInfo from "../feature/profile/ProfileInfo";
 
@@ -10,6 +11,7 @@ function Profile() {
       </p>
       <ProfileInfo />
       <ProfileForm />
+      <PasswordsEditing />
     </div>
   );
 }
