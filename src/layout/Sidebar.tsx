@@ -1,14 +1,20 @@
 import { Folder, Layout, Menu, User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 
 function Sidebar() {
-  const [openSideBar, setOpenSideBar] = useState<boolean>(true);
+  const [openSideBar, setOpenSideBar] = useState<boolean>(false);
+  useEffect(() => {
+    if (window.innerWidth <= 640) {
+      setOpenSideBar(false);
+    }
+  }, [openSideBar]);
   return (
     <aside
-      className={`${
-        openSideBar ? "w-72" : "w-20"
-      } transition-all duration-200 bg-white shadow-md sticky top-0 left-0 overflow-hidden z-20`}
+      className={`
+    ${openSideBar ? "w-72" : "w-20"} 
+    transition-all duration-200 bg-white shadow-md sticky top-0 left-0 overflow-hidden z-20
+  `}
     >
       <div>
         <p

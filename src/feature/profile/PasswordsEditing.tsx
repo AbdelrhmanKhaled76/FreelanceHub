@@ -3,7 +3,11 @@ import type { PasswordData } from "../../interfaces/profile/PasswordData";
 import { Lock } from "lucide-react";
 
 const PasswordsEditing = () => {
-  const [passwordData, setPasswordData] = useState<PasswordData | null>(null);
+  const [passwordData, setPasswordData] = useState<PasswordData>({
+    confirmPassword: "",
+    currentPassword: "",
+    newPassword: "",
+  });
   function handleDataChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
     setPasswordData((prev) => ({
