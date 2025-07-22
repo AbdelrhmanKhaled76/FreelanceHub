@@ -1,8 +1,10 @@
 import { CheckCircle, Clock, DollarSign, Folder } from "lucide-react";
-import type { OverViewData } from "../interfaces/overviewData";
+import type { OverViewData } from "../interfaces/overview/overviewData";
 import OverViewCard from "../feature/overview/overviewCard";
 import EarningCharts from "../feature/overview/EarningChart";
 import CircularChart from "../feature/overview/circularChart";
+import RecentActivity from "../feature/overview/RecentActivity";
+import QuickStats from "../feature/overview/QuickStats";
 
 function OverView() {
   const overviewData: OverViewData[] = [
@@ -45,6 +47,10 @@ function OverView() {
       <section className="grid lg:grid-cols-2 gap-5 w-full">
         <EarningCharts />
         <CircularChart />
+      </section>
+      <section className="my-5 grid lg:grid-cols-3 gap-5 w-full">
+        <RecentActivity />
+        <QuickStats />
       </section>
     </div>
   );

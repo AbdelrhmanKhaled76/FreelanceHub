@@ -8,11 +8,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { EarningChartType } from "../../interfaces/earningChart";
+import type { EarningChartType } from "../../interfaces/overview/earningChart";
 import { useState } from "react";
 
 const EarningCharts = () => {
-  // salary , month
   const data: EarningChartType[] = [
     { salary: 8000, month: "Aug" },
     { salary: 12000, month: "Sep" },
@@ -21,70 +20,69 @@ const EarningCharts = () => {
     { salary: 11020, month: "Dec" },
     { salary: 13700, month: "Jan" },
   ];
+
   const [activeMonths, setActiveMonths] = useState<string[]>(
     data.map((d) => d.month)
   );
+
   const filteredData = data.map((d) =>
     activeMonths.includes(d.month) ? d : { ...d, salary: 0 }
   );
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart
-        data={filteredData}
-        className="bg-white p-5 rounded-xl shadow-md w-full "
-        margin={{ top: 20 }}
-        onClick={(data) => {
-          const month = data.payload.month;
-          setActiveMonths((prev) =>
-            prev.includes(month)
-              ? prev.filter((m) => m !== month)
-              : [...prev, month]
-          );
-        }}
-      >
-        <XAxis
-          dataKey="month"
-          tick={(props) => {
-            const { x, y, payload } = props;
-            const month = payload.value;
-            return (
-              <text
-                x={x}
-                y={y + 15}
-                textAnchor="middle"
-                fill={activeMonths.includes(month) ? "#000" : "#aaa"}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setActiveMonths((prev) =>
-                    prev.includes(month)
-                      ? prev.filter((m) => m !== month)
-                      : [...prev, month]
-                  );
-                }}
-              >
-                {month}
-              </text>
-            );
-          }}
-        />
-        <CartesianGrid stroke="#ccc" />
-        <YAxis
-          width="auto"
-          dataKey="salary"
-          tickFormatter={(value) => `$${value.toLocaleString()}`}
-        />
-        <Bar
-          dataKey="salary"
-          barSize={30}
-          fill="#629BF8"
-          radius={4}
-          activeBar={false}
-        />
-        <Tooltip cursor={{ fill: "transparent" }} />
-        <Label position={"top"} value={"Monthly Earning"} />
-      </BarChart>
-    </ResponsiveContainer>
+    <div className="bg-white p-5 rounded-xl shadow-md w-full h-full">
+      <ResponsiveContainer width="100%" height={350}>
+        <BarChart data={filteredData} margin={{ top: 30 }}>
+          <CartesianGrid stroke="#ccc" />
+          <XAxis
+            dataKey="month"
+            tick={({ x, y, payload }) => {
+              const month = payload.value;
+              return (
+                <text
+                  x={x}
+                  y={y + 15}
+                  textAnchor="middle"
+                  fill={activeMonths.includes(month) ? "#000" : "#aaa"}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setActiveMonths((prev) =>
+                      prev.includes(month)
+                        ? prev.filter((m) => m !== month)
+                        : [...prev, month]
+                    );
+                  }}
+                >
+                  {month}
+                </text>
+              );
+            }}
+          />
+          <YAxis
+            width="auto"
+            dataKey="salary"
+            tickFormatter={(value) => `$${value.toLocaleString()}`}
+          />
+          <Bar
+            dataKey="salary"
+            barSize={30}
+            fill="#629BF8"
+            radius={4}
+            activeBar={false}
+            onClick={(data) => {
+              const month = data.payload.month;
+              setActiveMonths((prev) =>
+                prev.includes(month)
+                  ? prev.filter((m) => m !== month)
+                  : [...prev, month]
+              );
+            }}
+          />
+          <Tooltip cursor={{ fill: "transparent" }} />
+          <Label position={"top"} value={"Monthly Earnings"} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
